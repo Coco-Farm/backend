@@ -1,31 +1,28 @@
 package main
 
-var g *Game = NewGame()
-var gCnt = 0
-
 type Player struct {
-	ID int `json:"id"`
-	X  int `json:"x"`
-	Y  int `json:"y"`
+	ID string `json:"id"`
+	X  int    `json:"x"`
+	Y  int    `json:"y"`
 }
 
 type Game struct {
-	Players map[int]*Player
+	Players map[string]*Player
 }
 
 func NewGame() *Game {
-	return &Game{Players: make(map[int]*Player)}
+	return &Game{Players: make(map[string]*Player)}
 }
 
 func (g *Game) AddPlayer(p *Player) {
 	g.Players[p.ID] = p
 }
 
-func (g *Game) RemovePlayer(playerID int) {
+func (g *Game) RemovePlayer(playerID string) {
 	delete(g.Players, playerID)
 }
 
-func (g *Game) MovePlayer(playerID, deltaX, deltaY int) {
+func (g *Game) MovePlayer(playerID string, deltaX, deltaY int) {
 	player := g.Players[playerID]
 	player.X += deltaX
 	player.Y += deltaY
