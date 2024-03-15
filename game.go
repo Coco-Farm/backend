@@ -1,5 +1,8 @@
 package main
 
+var g *Game = NewGame()
+var gCnt = 0
+
 type Player struct {
 	ID int `json:"id"`
 	X  int `json:"x"`
