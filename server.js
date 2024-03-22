@@ -33,6 +33,7 @@ io.on("connection", (socket) => {
 
     socket.on("disconnect", () => {
         console.log("logout player: ", socket.id);
+        io.broadcast.emit("dropPlayer", socket.id);
         delete players[socket.id];
     });
 });
