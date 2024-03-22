@@ -9,11 +9,23 @@ const io = socketIO(server, {path: '/socket.io'});
 // server의 정보 
 let players = {};
 
+
 io.on("connection", (socket) => {
     console.log("New player: ", socket.id)
-    players[socket.id] = {x: 0, y: 0};
-    socket.emit("welcome", players)
-        
+
+    // player initialize
+    const random_x = Math.floor(Math.random() * 5);
+    const random_y = Math.floor(Math.random() * 8);
+    const players_obj = {id: socket.id, x: random_x, y: random_y, color: getRandomColor()};
+
+    // insert my server
+    players[socket.id] = players_obj;
+
+    // emit for clients
+    socket.emit("welcome", players);
+    socket.broadcast.emit("addPlayer", player_obj);
+
+    // catch client event
     socket.on("event", (data) => {
         console.log("event detected | player : ", socket.id);
         players[socket.id] = data;
